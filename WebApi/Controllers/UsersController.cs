@@ -27,10 +27,10 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [Produces("application/json")]
-        [HttpPost("/api/AdicionaUsuario")]
-        public async Task<IActionResult> AdicionaUsuario([FromBody] AddUserRequest login)
+        [HttpPost("/api/AddUser")]
+        public async Task<IActionResult> AddUser([FromBody] AddUserRequest login)
         {
-            if (string.IsNullOrWhiteSpace(login.email) || string.IsNullOrWhiteSpace(login.senha) || string.IsNullOrWhiteSpace(login.cpf))
+            if (string.IsNullOrWhiteSpace(login.email) || string.IsNullOrWhiteSpace(login.password) || string.IsNullOrWhiteSpace(login.cpf))
                 return Ok("Falta alguns dados");
 
 
@@ -41,11 +41,11 @@ namespace WebApi.Controllers
                 CPF = login.cpf
             };
 
-            var resultado = await _userManager.CreateAsync(user, login.senha);
+            var result = await _userManager.CreateAsync(user, login.password);
 
-            if (resultado.Errors.Any())
+            if (result.Errors.Any())
             {
-                return Ok(resultado.Errors);
+                return Ok(result.Errors);
             }
 
 
